@@ -1,0 +1,4 @@
+rootProject.name = 'installZad1'
+
+include 'app'
+

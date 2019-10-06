@@ -18,13 +18,18 @@ public class AverageServlet extends HttpServlet {
         var respWriter = resp.getWriter();
 
         if (!average.isBlank()) {
+            try {
+                OptionalDouble aver = Arrays.stream(average.split(",")).mapToInt((s) -> Integer.parseInt(s)).average();
 
-            OptionalDouble aver = Arrays.stream(average.split(",")).mapToInt((s) -> Integer.parseInt(s)).average();
+                resp.setStatus(200);
+                resp.setContentType("text/plain");
 
-            resp.setStatus(200);
-            resp.setContentType("text/plain");
+                respWriter.println("Average of " + average + " is " + aver.getAsDouble());
 
-            respWriter.println("Average of " + average + " is " + aver.getAsDouble());
+            } catch (NumberFormatException nfe) {
+                //nfe.printStackTrace();
+                respWriter.println("Ooops");
+            }
 
         } else {
             resp.setStatus(200);

@@ -15,13 +15,23 @@ public class AverageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         String average = req.getParameter("average");
-        OptionalDouble aver = Arrays.stream(average.split(",")).mapToInt((s) -> Integer.parseInt(s)).average();
-
-        resp.setStatus(200);
-        resp.setContentType("text/plain");
-
         var respWriter = resp.getWriter();
 
-        respWriter.println("Average of " + average + " is " + aver.getAsDouble());
+        if(!average.equals("")) {
+
+            OptionalDouble aver = Arrays.stream(average.split(",")).mapToInt((s) -> Integer.parseInt(s)).average();
+
+            resp.setStatus(200);
+            resp.setContentType("text/plain");
+
+            respWriter.println("Average of " + average + " is " + aver.getAsDouble());
+
+        }else{
+            resp.setStatus(200);
+            resp.setContentType("text/plain");
+
+            respWriter.println("No parameters to count");
+        }
+
     }
 }

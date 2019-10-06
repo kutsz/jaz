@@ -17,7 +17,7 @@ public class AverageServlet extends HttpServlet {
         String average = req.getParameter("average");
         var respWriter = resp.getWriter();
 
-        if(!average.equals("")) {
+        if (!average.isBlank()) {
 
             OptionalDouble aver = Arrays.stream(average.split(",")).mapToInt((s) -> Integer.parseInt(s)).average();
 
@@ -26,7 +26,7 @@ public class AverageServlet extends HttpServlet {
 
             respWriter.println("Average of " + average + " is " + aver.getAsDouble());
 
-        }else{
+        } else {
             resp.setStatus(200);
             resp.setContentType("text/plain");
 

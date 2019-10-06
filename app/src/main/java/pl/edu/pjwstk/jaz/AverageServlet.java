@@ -17,7 +17,8 @@ public class AverageServlet extends HttpServlet {
         String average = req.getParameter("average");
         var respWriter = resp.getWriter();
 
-        if (!average.isBlank()) {
+        if (average != null && !average.isBlank()) {
+
             try {
                 OptionalDouble aver = Arrays.stream(average.split(",")).mapToInt((s) -> Integer.parseInt(s)).average();
 
@@ -28,13 +29,10 @@ public class AverageServlet extends HttpServlet {
 
             } catch (NumberFormatException nfe) {
                 //nfe.printStackTrace();
-                respWriter.println("Ooops");
+                respWriter.println("No sequence of numbers");
             }
 
         } else {
-            resp.setStatus(200);
-            resp.setContentType("text/plain");
-
             respWriter.println("No parameters to count");
         }
 
